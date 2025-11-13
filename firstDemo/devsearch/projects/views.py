@@ -5,7 +5,7 @@ def homePage(request):
     return HttpResponse('Hello world')
 
 def projects(request):
-    return HttpResponse('Here are projects')
+    return render(request, 'projects/projects.html')
 
 def project(request,pk):
-    return HttpResponse('this is single project ' + pk)
+    return render(request,'projects/single-project.html'  )
