@@ -1,23 +1,91 @@
-
 {% extends 'main.html' %}
+
 {% block content %}
-<h1>Projects</h1>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Project</th>
-        <th>Votes</th>
-        <th>Ratio</th>
-        <th></th>
-    </tr>
-    {% for project in projects %}
-        <tr>
-            <td>{{project.id}}</td>
-            <td>{{project.title}}</td>
-            <td>{{project.vote_total}}</td>
-            <td>{{project.created}}</td>
-            <td><a href="{% url 'project' project.id%}">View</a> </td>
-        </tr>
-    {%endfor%}
-</table>
+<h1 class="page-title">Projects</h1>
+
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Votes</th>
+                <th>Created</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.vote_total }}</td>
+                <td>{{ project.created|date:"Y-m-d" }}</td>
+                <td><a class="view-btn" href="{% url 'update-project' project.id %}">Update</a></td>
+                <td><a class="view-btn" href="{% url 'project' project.id %}">View</a></td>
+                <td><a class="view-btn" href="{% url 'delete-project' project.id %}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .page-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2C3E50;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    thead {
+        background-color: #2C3E50;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #F7F9FC;
+    }
+
+    tbody tr:hover {
+        background-color: #E8F0FE;
+        transition: 0.2s;
+    }
+
+    .view-btn {
+        background: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .view-btn:hover {
+        background: #1d6fa5;
+    }
+</style>
+
 {% endblock content %}

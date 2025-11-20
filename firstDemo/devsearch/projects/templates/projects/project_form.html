@@ -1,10 +1,79 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>Project Form</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-<input type="submit" >
 
-</form>
+<div class="form-container">
+    <h1 class="form-title">Create / Edit Project</h1>
+
+    <form method="POST" class="styled-form">
+        {% csrf_token %}
+
+        <div class="form-fields">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="submit-btn">Save Project</button>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        font-family: Arial, sans-serif;
+    }
+
+    .form-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2C3E50;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    .styled-form input[type="text"],
+    .styled-form input[type="url"],
+    .styled-form textarea,
+    .styled-form select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+        background: #fafafa;
+        font-size: 14px;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        outline: none;
+        transition: .2s;
+    }
+
+    .styled-form input:focus,
+    .styled-form textarea:focus,
+    .styled-form select:focus {
+        border-color: #3498db;
+        background: #fff;
+        box-shadow: 0 0 6px rgba(52, 152, 219, 0.25);
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background: #3498db;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .submit-btn:hover {
+        background: #1d6fa5;
+    }
+</style>
+
 {% endblock content %}
