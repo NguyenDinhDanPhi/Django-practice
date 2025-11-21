@@ -45,3 +45,4 @@ def deleteProject(request, pk):
         project.delete()
         return redirect('projects')
     return render(request,'projects/delete_template.html',context )
+#this is test diff indicators 
