@@ -3,7 +3,7 @@ from .models import Profile
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-# Create your views here.
+from .form import CustomUserCreationForm
 def profiles(request):
     profiles = Profile.objects.all()
     context = {'profiles': profiles}
@@ -17,7 +17,7 @@ def userProfile(request,pk):
     return render(request, 'users/user-profile.html',context)
 
 def loginUser(request):
-
+    page = 'login'
     if request.user.is_authenticated:
         return redirect('profiles')
 
@@ -27,7 +27,6 @@ def loginUser(request):
         try:
             user = User.objects.get()
         except:
-            messages.error(request, 'Username does not exist')
             user = authenticate(request, username=username,password=password)
         if user is not None:
             login(request, user)
@@ -40,3 +39,20 @@ def logoutUser(request):
     logout(request)
     messages.error(request, 'User was logout')
     return redirect('login')
+
+def registerUser(request):
+    page = 'register'
+    form = CustomUserCreationForm()
+    context = {'page':page, 'form':form}
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            messages.success(request,'User Account was created!')
+            login(request,user)
+            return redirect('profiles')
+        else:
+            messages.success(request,'An error has occurred during registrattion')
+    return render(request,'users/login_register.html', context)
