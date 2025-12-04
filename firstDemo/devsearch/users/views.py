@@ -37,13 +37,12 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, 'User was logout')
+    messages.info(request, 'User was logout')
     return redirect('login')
 
 def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm()
-    context = {'page':page, 'form':form}
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -55,4 +54,5 @@ def registerUser(request):
             return redirect('profiles')
         else:
             messages.success(request,'An error has occurred during registrattion')
+    context = {'page':page, 'form':form}
     return render(request,'users/login_register.html', context)
